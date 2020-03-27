@@ -86,11 +86,20 @@ void setup() {  // Begin setup
     Serial.println("Press the button to change the device's name");
      
    
-  attachInterrupt(21, zero_cross_detect, RISING);    // Attach an Interupt to Pin 2 (interupt 0) for Zero Cross Detection
-  startTimer();
+  attachInterrupt(19, zero_crosss_int, RISING);    // Attach an Interupt to Pin 2 (interupt 0) for Zero Cross Detection
+//  startTimer();
 
 }
 
+//the interrupt function must take no parameters and return nothing
+void zero_crosss_int()  //function to be fired at the zero crossing to dim the light
+{
+  int dimming_time = (100*dim);
+  delayMicroseconds(dimming_time);  
+  digitalWrite(AC_pin, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(AC_pin, LOW);
+}
 void zero_cross_detect() {  
 Serial.println("Zero");
   zero_cross = true;               // set flag for dim_check function that a zero cross has occured
